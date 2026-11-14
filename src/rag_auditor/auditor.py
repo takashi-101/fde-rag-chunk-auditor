@@ -1,4 +1,4 @@
-"""RAG chunking & boundary-loss auditor for legal/policy documents."""
+"""Fixed-length chunking and a chunk-ending check for policy documents."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def chunk_text(text: str, max_chars: int = 300, overlap: int = 40) -> List[str]:
 
 
 def audit_chunks(chunks: List[str]) -> ChunkAuditReport:
-    """Detects chunks that cut mid-sentence or split Japanese article headers."""
+    """Counts chunks whose stripped text does not end with an accepted sentence ending."""
     broken = 0
     for ch in chunks:
         stripped = ch.strip()
