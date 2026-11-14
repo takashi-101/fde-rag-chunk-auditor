@@ -1,13 +1,11 @@
 # FDE RAG Chunk Auditor（RAGチャンク分割・文脈欠損監査ツール）
 
-[![tests](https://github.com/takashi-101/fde-rag-chunk-auditor/actions/workflows/tests.yml/badge.svg)](https://github.com/takashi-101/fde-rag-chunk-auditor/actions/workflows/tests.yml)
-
 RAG（検索した文書の断片をLLMに渡して回答させる方式）に使う規程やマニュアルを、決まった文字数のチャンク（分割した文書の断片）に分け、文の途中で終わっているチャンクの数を数えるツールです。分割の設定（最大文字数と、隣のチャンクと重ねる文字数）を変えて実行し、結果を比べられます。
 
 ## 30秒で読む要点
 - **分割は文字数だけで行います**：`chunk_text` は、先頭から `max_chars` 文字ずつ、`max_chars − overlap` 文字ずつずらして切り出します。文や条文の区切りは見ません。
 - **判定はチャンクの末尾だけで行います**：`audit_chunks` は、前後の空白を除いた末尾が `。` `）` `」` のどれでもなく、`第(数字)条` でも終わっていないチャンクを、文の途中で終わっているもの（`broken_clauses`）として数えます。
-- **標準ライブラリだけで動きます**：外部との通信や有料APIは使いません。テスト30件（正常・境界・異常）を、CI（GitHub Actions による自動テスト）で Python 3.11 と 3.12 で実行しています。
+- **標準ライブラリだけで動きます**：外部との通信や有料APIは使いません。テストは30件（正常・境界・異常）です。
 
 ## 見本を動かす
 `examples/sample_policy.txt` は架空の情報取扱規程（第1条〜第10条、454文字）です。
@@ -81,15 +79,16 @@ examples/
   run_example.py        テキストを分割し、判定の結果を JSON で表示
   sample_policy.txt     見本の規程（架空）
 tests/                  ユニットテスト
-.github/workflows/      CI（Python 3.11・3.12）
 ```
 
 ## 根拠（学習）
 
-| 機能 | 裏付けになる学習（発行元・名称・発行日） | 照会先（Credly） |
-|---|---|---|
-| RAG用の固定長分割（チャンク化） | Coursera（認定：IBM）「Build RAG Applications: Get Started」2026年11月1日 | https://www.credly.com/badges/68c65890-a24d-4251-afe3-0dae3f03ed15 |
-| LLMに渡す文書データの下ごしらえ（チャンク末尾の点検） | Coursera（認定：IBM）「Generative AI and LLMs: Architecture and Data Preparation」2026年11月1日 | https://www.credly.com/badges/d18319e6-bcc1-480e-ac79-09744b9d41aa |
+| 求められる力 | 機能 | 裏付けになる学習（発行元・名称・発行日） | 照会先（Credly） |
+|---|---|---|---|
+| 生成AI・LLMの実装（RAG・エージェント・MCP） | RAG用の固定長分割（チャンク化） | Coursera（認定：IBM）「Build RAG Applications: Get Started」2026年11月1日 | https://www.credly.com/badges/68c65890-a24d-4251-afe3-0dae3f03ed15 |
+| 生成AI・LLMの実装（RAG・エージェント・MCP） | LLMに渡す文書データの下ごしらえ（チャンク末尾の点検） | Coursera（認定：IBM）「Generative AI and LLMs: Architecture and Data Preparation」2026年11月1日 | https://www.credly.com/badges/d18319e6-bcc1-480e-ac79-09744b9d41aa |
+
+「求められる力」の分け方は、[プロフィール](https://github.com/takashi-101) の「FDE・AXで求められる力と、その根拠」と同じです。
 
 ## ライセンス
 MIT
