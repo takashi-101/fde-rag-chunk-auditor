@@ -84,5 +84,12 @@ tests/                  ユニットテスト
 .github/workflows/      CI（Python 3.11・3.12）
 ```
 
+## 根拠（学習）
+
+| 機能 | 裏付けになる学習（発行元・名称・発行日） | 照会先（Credly） |
+|---|---|---|
+| RAG用の固定長分割（チャンク化） | Coursera（認定：IBM）「Build RAG Applications: Get Started」2026年11月1日 | https://www.credly.com/badges/68c65890-a24d-4251-afe3-0dae3f03ed15 |
+| LLMに渡す文書データの下ごしらえ（チャンク末尾の点検） | Coursera（認定：IBM）「Generative AI and LLMs: Architecture and Data Preparation」2026年11月1日 | https://www.credly.com/badges/d18319e6-bcc1-480e-ac79-09744b9d41aa |
+
 ## ライセンス
 MIT
