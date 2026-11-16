@@ -1,8 +1,11 @@
 # FDE RAG Chunk Auditor（RAGチャンク分割・文脈欠損監査ツール）
 
+[![tests](https://github.com/takashi-101/fde-rag-chunk-auditor/actions/workflows/tests.yml/badge.svg)](https://github.com/takashi-101/fde-rag-chunk-auditor/actions/workflows/tests.yml)
+
 RAG（検索した文書の断片をLLMに渡して回答させる方式）に使う規程やマニュアルを、決まった文字数のチャンク（分割した文書の断片）に分け、文の途中で終わっているチャンクの数を数えるツールです。分割の設定（最大文字数と、隣のチャンクと重ねる文字数）を変えて実行し、結果を比べられます。
 
 ## 30秒で読む要点
+- **なぜ作ったか**：[local-llm-record](https://github.com/takashi-101/local-llm-record) の実測では、関連部分だけを渡す方式（RAG）で、守るべき事項の一部が出力から欠けました。RAGの結果は文書の区切り方にも左右されるため、区切り方の設定を変えたときに、文の途中で切れた断片がいくつあるかを数えて比べるための点検ツールです。
 - **分割は文字数だけで行います**：`chunk_text` は、先頭から `max_chars` 文字ずつ、`max_chars − overlap` 文字ずつずらして切り出します。文や条文の区切りは見ません。
 - **判定はチャンクの末尾だけで行います**：`audit_chunks` は、前後の空白を除いた末尾が `。` `）` `」` のどれでもなく、`第(数字)条` でも終わっていないチャンクを、文の途中で終わっているもの（`broken_clauses`）として数えます。
 - **標準ライブラリだけで動きます**：外部との通信や有料APIは使いません。テストは30件（正常・境界・異常）です。
